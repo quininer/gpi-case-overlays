@@ -4,10 +4,10 @@
 /plugin/;
 
 #include <dt-bindings/gpio/gpio.h>
-#include <dt-bindings/pinctrl/bcm2835.h>
+#include <dt-bindings/pinctrl/starfive,jh7110-pinctrl.h>
 
 / {
-	compatible = "brcm,bcm2835";
+	compatible = "starfive,jh7110";
 	fragment@0 {
 		target-path = "/";
 		__overlay__ {
@@ -66,15 +66,12 @@
 		};
 	};
 	fragment@4 {
-		target = <&usb>;
+		target = <&usb0>;
 		#address-cells = <1>;
 		#size-cells = <1>;
 		__overlay__ {
-			compatible = "brcm,bcm2835-usb";
+			compatible = "starfive,jh7110-usb";
 			dr_mode = "host";
-			g-np-tx-fifo-size = <32>;
-			g-rx-fifo-size = <558>;
-			g-tx-fifo-size = <512 512 512 512 512 256 256>;
 			status = "okay";
 		};
 	};
@@ -82,9 +79,9 @@
 		target = <&gpio>;
 		__overlay__ {
 			led_pin: led_pins@1b {
-				brcm,pins = <27>;
-				brcm,function = <1>;
-				brcm,pull = <0>;
+				starfive,pins = <43>;
+				starfive,function = <1>;
+				starfive,pull = <0>;
 			};
 		};
 	};
@@ -98,7 +95,7 @@
 				status = "okay";
 				led {
 					label = "power_enable";
-					gpios = <&gpio 27 1>;
+					gpios = <&gpio 43 1>;
 					linux,default-trigger = "none";
 				};
 			};
@@ -108,9 +105,9 @@
 		target = <&gpio>;
 		__overlay__ {
 			pin_state: shutdown_button_pins@1a {
-				brcm,pins = <26>;
-				brcm,function = <0>;
-				brcm,pull = <2>;
+				starfive,pins = <60>;
+				starfive,function = <0>;
+				starfive,pull = <2>;
 			};
 		};
 	};
@@ -125,7 +122,7 @@
 				shutdown {
 					label = "shutdown";
 					linux,code = <116>;
-					gpios = <&gpio 26 1>;
+					gpios = <&gpio 60 1>;
 					debounce-interval = <100>;
 				};
 			};
